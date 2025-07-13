@@ -21,4 +21,7 @@ VERIFICATION_CODE_EXPIRY=300000
 
 # Server Configuration
 PORT=3001
-NODE_ENV=development 
+NODE_ENV=development
+
+# reCAPTCHA Configuration
+RECAPTCHA_SECRET_KEY=6Ldg8IArAAAAACjjTXS7GftIcIJiuFgJ8v8-n9Ok

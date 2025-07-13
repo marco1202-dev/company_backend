@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 const { User, LoginAttempt, EmailVerification, PasswordReset } = require('../models');
 const { Op } = require('sequelize');
+const { recaptchaMiddleware } = require('../utils/recaptcha');
 const router = express.Router();
 
 // Check username availability endpoint
@@ -463,7 +464,7 @@ router.post('/signup', [
   body('zipcode').trim().isLength({ min: 1 }).withMessage('Postal code is required'),
   body('phone').trim().isLength({ min: 1 }).withMessage('Mobile number is required'),
   body('bankroll_currency').isIn(['USD', 'EUR', 'GBP', 'BTC', 'ETH', 'USDT', 'BNB', 'ADA', 'SOL', 'DOT']).withMessage('Valid currency is required')
-], async (req, res) => {
+], recaptchaMiddleware(true), async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
